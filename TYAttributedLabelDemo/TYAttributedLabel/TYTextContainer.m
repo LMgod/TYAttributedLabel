@@ -382,6 +382,7 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
         
         CFArrayRef runs = CTLineGetGlyphRuns(line);
         // 获得每行的run
+        CGFloat nextOffset = 0;
         for (int j = 0; j < CFArrayGetCount(runs); j++) {
             CGFloat runAscent;
             CGFloat runDescent;
@@ -390,14 +391,13 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
             // run的属性字典
             NSDictionary* attributes = (NSDictionary*)CTRunGetAttributes(run);
             id<TYTextStorageProtocol> textStorage = [attributes objectForKey:kTYTextRunAttributedName];
-            
+            CGFloat runWidth  = CTRunGetTypographicBounds(run, CFRangeMake(0,0), &runAscent, &runDescent, NULL);
             if (textStorage) {
-                CGFloat runWidth  = CTRunGetTypographicBounds(run, CFRangeMake(0,0), &runAscent, &runDescent, NULL);
-                
                 if (viewWidth > 0 && runWidth > viewWidth) {
                     runWidth  = viewWidth;
                 }
-                CGRect runRect = CGRectMake(lineOrigin.x + CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL), lineOrigin.y - runDescent, runWidth, runAscent + runDescent);
+                CGRect runRect = CGRectMake(lineOrigin.x + nextOffset, lineOrigin.y - runDescent, runWidth, runAscent + runDescent);
+                          
                 
                 if ([textStorage conformsToProtocol:@protocol(TYDrawStorageProtocol)]) {
                     [drawRectDictionary setObject:textStorage forKey:[NSValue valueWithCGRect:runRect]];
@@ -407,7 +407,10 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
                 
                 [runRectDictionary setObject:textStorage forKey:[NSValue valueWithCGRect:runRect]];
             }
+            nextOffset += runWidth;
         }
+        
+        
     }
     
     if (drawRectDictionary.count > 0) {
@@ -427,6 +430,7 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
         _linkRectDictionary = nil;
     }
 }
+
 
 // 添加响应点击rect
 - (void)addRunRectDictionary:(NSDictionary *)runRectDictionary

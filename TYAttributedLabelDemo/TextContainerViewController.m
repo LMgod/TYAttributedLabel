@@ -53,58 +53,74 @@
 
 - (void)createTextContainer
 {
-    NSString *text = @"<img>蒹葭-云歌\n蒹葭苍苍，[@]。所谓伊人，在水一方。溯洄从之，道阻且长，溯游从之，宛在水中央。\n蒹葭萋萋，白露未晞。[@]，在水之湄。溯洄从之，[@]。溯游从之，宛在水中坻。\n[@]，[@]。所谓伊人，在水之涘。溯洄从之，道阻且右。溯游从之，[@]。\n注解:\n《蒹葭》，[haha]出自《诗经·国风·秦风》，是一首描写对意中人深深的[@]和求而不得的惆怅的诗。\n";
+    
+    NSString *text = @"افققثصصصصصص<img>蒹葭-云歌\n蒹葭苍苍，🩱للاههههههههههههغصص🥸🫁🫀🩳[@]。所谓伊人，在水一方。溯洄从之，道阻且长，溯游从之，宛在水中央。\n蒹葭萋萋，白露未晞。[@]，在水之湄。溯洄从之，[@]。溯游从之，宛在水中坻。\n[@]，[@]。所谓伊人，在水之涘。溯洄从之，道阻且右。溯游从之，[@]。\n注解:\n《蒹葭》，[haha]出自《诗经·国风·秦风》，是一首描写对意中人深深的[@]和求而不得的惆怅的诗。\n";
     
     // 属性文本生成器
     TYTextContainer *textContainer = [[TYTextContainer alloc]init];
-    textContainer.text = text;
+    
+    
+    UIImageView *imgView = [[UIImageView alloc] init];
+    imgView.contentMode = UIViewContentModeScaleAspectFill;
+    [imgView setBounds:CGRectMake(0, 0, 15, 15)];
+    imgView.image = [UIImage imageNamed:@"icon_zt_dui"];
+    [textContainer appendView:imgView alignment:TYDrawAlignmentCenter];
+    
+    
+    NSMutableAttributedString *nameAttr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", text]];
+    [nameAttr addAttribute:NSForegroundColorAttributeName value:UIColor.lightGrayColor range:NSMakeRange(0, nameAttr.length)];
+    [nameAttr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, nameAttr.length)];
+    [textContainer appendTextAttributedString:nameAttr];
+    
+    
+    //textContainer.text = text;
     
     // 整体设置属性
-    textContainer.linesSpacing = 2;
-    textContainer.paragraphSpacing = 5;
+//    textContainer.linesSpacing = 2;
+//    textContainer.paragraphSpacing = 5;
     
     // 文字样式
-    TYTextStorage *textStorage = [[TYTextStorage alloc]init];
-    textStorage.range = [text rangeOfString:@"蒹葭"];
-    textStorage.font = [UIFont systemFontOfSize:18];
-    textStorage.textColor = RGB(206, 39, 206, 1);
-    [textContainer addTextStorage:textStorage];
-    
-    // 文字样式
-    TYTextStorage *textStorage1 = [[TYTextStorage alloc]init];
-    textStorage1.range = [text rangeOfString:@"注解:"];
-    textStorage1.font = [UIFont systemFontOfSize:17];
-    textStorage1.textColor = RGB(209, 162, 74, 1);
-    [textContainer addTextStorage:textStorage1];
-    
-    // 下划线文字
-    TYLinkTextStorage *linkTextStorage = [[TYLinkTextStorage alloc]init];
-    linkTextStorage.range = [text rangeOfString:@"《蒹葭》"];
-    linkTextStorage.linkData = @"点击了 《蒹葭》";
-    [textContainer addTextStorage:linkTextStorage];
-    
-    TYLinkTextStorage *linkTextStorage1 = [[TYLinkTextStorage alloc]init];
-    linkTextStorage1.range = [text rangeOfString:@"《诗经·国风·秦风》"];
-    linkTextStorage1.linkData = @"点击了 《诗经·国风·秦风》";
-    [textContainer addTextStorage:linkTextStorage1];
+//    TYTextStorage *textStorage = [[TYTextStorage alloc]init];
+//    textStorage.range = [text rangeOfString:@"蒹葭"];
+//    textStorage.font = [UIFont systemFontOfSize:18];
+//    textStorage.textColor = RGB(206, 39, 206, 1);
+//    [textContainer addTextStorage:textStorage];
+//
+//    // 文字样式
+//    TYTextStorage *textStorage1 = [[TYTextStorage alloc]init];
+//    textStorage1.range = [text rangeOfString:@"注解:"];
+//    textStorage1.font = [UIFont systemFontOfSize:17];
+//    textStorage1.textColor = RGB(209, 162, 74, 1);
+//    [textContainer addTextStorage:textStorage1];
+//
+//    // 下划线文字
+//    TYLinkTextStorage *linkTextStorage = [[TYLinkTextStorage alloc]init];
+//    linkTextStorage.range = [text rangeOfString:@"《蒹葭》"];
+//    linkTextStorage.linkData = @"点击了 《蒹葭》";
+//    [textContainer addTextStorage:linkTextStorage];
+//
+//    TYLinkTextStorage *linkTextStorage1 = [[TYLinkTextStorage alloc]init];
+//    linkTextStorage1.range = [text rangeOfString:@"《诗经·国风·秦风》"];
+//    linkTextStorage1.linkData = @"点击了 《诗经·国风·秦风》";
+//    [textContainer addTextStorage:linkTextStorage1];
     
     // url图片
-    TYImageStorage *imageUrlStorage = [[TYImageStorage alloc]init];
-    imageUrlStorage.range = [text rangeOfString:@"<img>"];
-    imageUrlStorage.imageURL = [NSURL URLWithString:@"http://imgbdb2.bendibao.com/beijing/201310/21/2013102114858726.jpg"];
-    imageUrlStorage.size = CGSizeMake(kAttrLabelWidth, 343*kAttrLabelWidth/600);
-    [textContainer addTextStorage:imageUrlStorage];
+//    TYImageStorage *imageUrlStorage = [[TYImageStorage alloc]init];
+//    imageUrlStorage.range = [text rangeOfString:@"<img>"];
+//    imageUrlStorage.imageURL = [NSURL URLWithString:@"http://imgbdb2.bendibao.com/beijing/201310/21/2013102114858726.jpg"];
+//    imageUrlStorage.size = CGSizeMake(kAttrLabelWidth, 343*kAttrLabelWidth/600);
+//    [textContainer addTextStorage:imageUrlStorage];
     
     // image图片
-    TYImageStorage *imageStorage = [[TYImageStorage alloc]init];
-    imageStorage.range = [text rangeOfString:@"[haha]"];
-    imageStorage.imageName = @"haha";
-    imageStorage.size = CGSizeMake(15, 15);
-    [textContainer addTextStorage:imageStorage];
+//    TYImageStorage *imageStorage = [[TYImageStorage alloc]init];
+//    imageStorage.range = [text rangeOfString:@"[haha]"];
+//    imageStorage.imageName = @"haha";
+//    imageStorage.size = CGSizeMake(15, 15);
+//    [textContainer addTextStorage:imageStorage];
     
     // 填空题
-    NSArray *blankStorage = [self.class parseTextFieldsWithString:text];
-    [textContainer addTextStorageArray:blankStorage];
+//    NSArray *blankStorage = [self.class parseTextFieldsWithString:text];
+//    [textContainer addTextStorageArray:blankStorage];
     
     // 生成 NSAttributedString
     //_attString = [textContainer createAttributedString];
